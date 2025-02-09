@@ -5,7 +5,7 @@ import numpy as np
 
 '''
 nn是Neural Network的缩写,functional中包含了许多激活函数提供使用。
-nn.module是所有神经网络的基类,你所创建的神经网络继承于该基类
+nn.module是所有神经网络的基类,你所创建的神经网络继承于该基类。
 '''
 
 print("## 1.张量的创建:")
