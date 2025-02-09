@@ -2,6 +2,11 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as Fun
 
+'''
+nn是Neural Network的缩写,functional中包含了许多激活函数提供使用。
+nn.module是所有神经网络的基类,你的神经网络要继承于该基类
+'''
+
 print("## 1.张量的创建:")
 ## 1.张量的创建
 # 创建一个未初始化的张量
