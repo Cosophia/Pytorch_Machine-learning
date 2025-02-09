@@ -1,10 +1,11 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as Fun
+import numpy as np
 
 '''
 nn是Neural Network的缩写,functional中包含了许多激活函数提供使用。
-nn.module是所有神经网络的基类,你的神经网络要继承于该基类
+nn.module是所有神经网络的基类,你所创建的神经网络继承于该基类
 '''
 
 print("## 1.张量的创建:")
@@ -159,7 +160,6 @@ y[0, 0] = 10
 print("修改副本后:", x) # 修改副本不会影响原张量
 
 
-print("\n## 9.神经网络的创建:")
 ## 9.神经网络的创建
 class Net(nn.Module):
     def __init__(self, ):
@@ -177,9 +177,27 @@ class Net(nn.Module):
         x = Fun.softmax(self.fc2(x), dim=-1)  # dim=-1 means the last dimension
         return max(x)  # 取最大概率
 
+## 10.从 NumPy 数组创建张量
+print("\n## 10. NumPy数组与TenSor张量之间的转化:")
+# 从 NumPy 数组转换为 PyTorch 张量
+np_array = np.array([[1, 2], [3, 4]])
+tensor_from_np = torch.from_numpy(np_array)
+print("NumPy 数组：")
+print(np_array)
+print("转换后的 PyTorch 张量:")
+print(tensor_from_np)
+
+# 从 PyTorch 张量转换为 NumPy 数组
+tensor = torch.tensor([[1, 2], [3, 4]]) # 创建一个 PyTorch 张量
+np_array_from_tensor = tensor.numpy()
+print("PyTorch 张量:")
+print(tensor)
+print("转换后的 NumPy 数组:")
+print(np_array_from_tensor)
+
 
 if __name__ == "__main__":
     net = Net()
     x_data = torch.tensor(list(range(10)), dtype=torch.float32)
-    print("\n简单的神经网络的创建:", net)
+    print("\n9.简单的神经网络的创建:", net)
     print("x_data经过隐藏层的输出为:", net(x_data))
