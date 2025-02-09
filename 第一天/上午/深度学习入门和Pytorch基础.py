@@ -20,8 +20,8 @@ print("全零张量:", x)
 x = torch.ones(3, 3)
 print("全一张量:", x)
 
-print("\n## 2.张量的操作:")
-## 2.张量的操作
+print("\n## 2.张量的计算:")
+## 2.张量的计算
 # 张量加法
 x = torch.rand(2, 3)
 y = torch.rand(2, 3)
@@ -66,8 +66,7 @@ print("点乘(matmul):", torch.matmul(w, z))
 print("点乘(*后求和_:", (w * z).sum())
 print("矩阵乘法(matmul):",u @ z)
 
-# 张量切片
-print("张量x和y的切片", x[:, 1])  # 获取第 2 列
+
 
 print("\n## 3.自动求导:")
 ## 3.自动求导
@@ -101,6 +100,8 @@ print("x 的形状:", x.size())
 # 将其数据展平
 x_flatten = x.view(-1)
 print("展平后 x 的:", x_flatten)
+# 张量重塑
+print("The way to reshape the tensor,what we use in Pytorch is 'view',result:",x.view(3,2))
 # 张量转置
 x_transposed = x.t()
 print("展平且转置后的 x:", x_transposed)
@@ -112,10 +113,49 @@ d = torch.rand(5, 5)
 y = torch.randn_like(d)
 print("The shape of the y :", y.shape)
 
-print("\n## 7.神经网络的创建:")
+
+## 7.张量的索引
+print("\n## 7.张量的索引:")
+x = torch.rand(5,5)
+print(x)
+print("索引单个元素:", x[1,2])  # 索引单个元素
+print("索引单行:", x[1]) # 索引单行
+print("索引单列:", x[:, 1]) # 索引单列
+print("切片多行：", x[1:3]) # 切片多行
+print("切片多列：", x[:, 1:3]) # 切片多列
+print("切片多行多列：", x[1:3, 1:3]) # 切片多行多列
+print("布尔索引:", x[x > 0.5]) # 布尔索引
+print("高级索引:", x[[1, 2, 3], [1, 2, 3]]) # 高级索引 (第1,2,3行的第1,2,3列的数据)
+
+## 8.利用索引改变具体的数据
+print("\n## 8.利用索引改变具体的数据:")
+# 特定的元素修改
+x[1, 2] = 10
+print("修改后的 x:", x)
+# 使用切片修改
+x[:, 1] = 0
+print("修改后的 x:", x)
+# 使用布尔索引修改
+mask = x > 0.5
+x[mask] = -1
+print("修改后的 x:", x)
+# 使用广播修改
+x[:, 1:] = 10
+print("广播修改后:", x)
+# 使用视图创建视图
+y = x[1:, 1:]
+print("视图:", y)
+y[0, 0] = 10
+print("修改视图后:", x)  # 修改视图会影响原张量
+# 使用索引创建副本
+y = x[1:, 1:].clone() # 利用clone()创建副本
+print("副本:", y)
+y[0, 0] = 10
+print("修改副本后:", x) # 修改副本不会影响原张量
 
 
-## 7.神经网络的创建
+print("\n## 9.神经网络的创建:")
+## 9.神经网络的创建
 class Net(nn.Module):
     def __init__(self, ):
         super(Net, self).__init__()
@@ -126,6 +166,7 @@ class Net(nn.Module):
         self.fc2 = nn.Linear(5, 2)
 
     def forward(self, x):
+        """前向传播"""
         x = Fun.relu(self.fc1(x))
         print("After activating by relu x =", x)
         x = Fun.softmax(self.fc2(x), dim=-1)  # dim=-1 means the last dimension
