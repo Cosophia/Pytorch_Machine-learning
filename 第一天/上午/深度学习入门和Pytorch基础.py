@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as Fun
-
+print("## 1.张量的创建:")
 ## 1.张量的创建
 # 创建一个未初始化的张量
 x = torch.empty(3, 3)  # 2 行 3 列
@@ -19,6 +19,7 @@ print("全零张量:", x)
 x = torch.ones(3, 3)
 print("全一张量:", x)
 
+print("\n## 2.张量的操作:")
 ## 2.张量的操作
 # 张量加法
 x = torch.rand(2, 3)
@@ -33,6 +34,7 @@ print("张量x和y的乘法结果:", z)
 # 张量切片
 print("张量x和y的切片", x[:, 1])  # 获取第 2 列
 
+print("\n## 3.自动求导:")
 ## 3.自动求导
 x = torch.tensor([1.0, 2.0, 3.0], requires_grad=True)
 y = x ** 2
@@ -48,6 +50,7 @@ z.backward()  # 计算梯度:
 print("x 的梯度:", x.grad)  # 输出 x 的梯度
 
 ## 4.张量数据类型的转换
+print("\n## 4.张量数据类型的转换:")
 x = torch.tensor([1.0, 2.0, 3.0], dtype=torch.float32)
 x = x.to(torch.float64)
 print("x 的数据类型:", x.dtype)
@@ -67,8 +70,15 @@ print("展平后 x 的:", x_flatten)
 x_transposed = x.t()
 print("展平且转置后的 x:", x_transposed)
 
+print("\n## 6.张量的形状的复制:")
+## 6.张量的形状的复制
+# If you want to create a tensor like a specific shape, you can use the torch.randn_like() function.
+d = torch.rand(5,5)
+y = torch.randn_like(d)
+print("The shape of the y :", y.shape)
 
-## 6.神经网络的创建
+print("\n## 7.神经网络的创建:")
+## 7.神经网络的创建
 class Net(nn.Module):
     def __init__(self, ):
         super(Net, self).__init__()
@@ -87,5 +97,5 @@ class Net(nn.Module):
 
 net = Net()
 x_data = torch.tensor(list(range(10)), dtype=torch.float32)
-print("简单的神经网络的创建:", net)
+print("\n简单的神经网络的创建:", net)
 print("x_data经过隐藏层的输出为:", net(x_data))
