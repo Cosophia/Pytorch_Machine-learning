@@ -52,10 +52,12 @@ if __name__ == '__main__':
     # 数据集划分
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
     print(X_train.shape, Y_train.shape, X_test.shape, Y_test.shape)
+
     # 数据归一化
     scaler = StandardScaler()
     X_train = scaler.fit_transform(X_train)
     X_test = scaler.transform(X_test)
+
     # 数据转换成tensor
     X_train = torch.tensor(X_train, dtype=torch.float32)
     X_test = torch.tensor(X_test, dtype=torch.float32)
@@ -66,7 +68,7 @@ if __name__ == '__main__':
     model = Logistic_Regression(X_train.shape[1])
 
     # 模型训练
-    fit(model, X_train, Y_train, 1000)
+    fit(model, X_train, Y_train, 10000)
 
     # 模型评估
     with torch.no_grad():
