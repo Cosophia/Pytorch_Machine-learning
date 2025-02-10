@@ -1,13 +1,14 @@
 from matplotlib import pyplot as plt
 from sklearn.datasets import load_diabetes
-from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 import torch.nn as nn
 import torch.nn.functional as Fun
 import torch
 
 
+# 线性模型的定义
 class Linear_Regression(nn.Module):
     def __init__(self, input_dim, output_dim):
         super(Linear_Regression, self).__init__()
@@ -15,17 +16,17 @@ class Linear_Regression(nn.Module):
     def forward(self, x):
         return self.fc1(x)
 
-
+# 损失函数
 def loss(y_prediction, y_train):
     return Fun.mse_loss(y_prediction.view(-1), y_train)
 
-
+# 优化器
 def optimizer(Model):
-    return torch.optim.Adam(Model.parameters(), lr=0.05)
+    return torch.optim.Adam(Model.parameters(), lr=0.01)
 
 
 def fit(Model, X_data, Y_data, epoch):
-    for epoch in range(epoch):
+    for epoch in range(epoch+1):
         Model.train()
         y_pre = Model(X_data)
         optimizer(Model).zero_grad()  # 梯度清零
@@ -37,11 +38,9 @@ def fit(Model, X_data, Y_data, epoch):
 if __name__ == '__main__':
     ## 数据读取
     data = load_diabetes()
-    # print(data.DESCR)
     X = data.data
     Y = data.target
     feature_names = data.feature_names
-    # print(feature_names)
     ## 数据标准化
     Scaler = StandardScaler()
     X = Scaler.fit_transform(X)
@@ -52,18 +51,15 @@ if __name__ == '__main__':
     Y_train = torch.tensor(Y_train, dtype=torch.float32)
     X_test = torch.tensor(X_test, dtype=torch.float32)
     Y_test = torch.tensor(Y_test, dtype=torch.float32)
-    print(X_train)
-    print(Y_test)
     model = Linear_Regression(X_train.shape[1], 1)
     fit(model, X_train, Y_train, epoch=4000)
 
     # 评估模型
     with torch.no_grad():
         y_test_pred = model(X_test)
-        print(y_test_pred.view(-1))
-        print(Y_test)
-        print("r2:", r2_score(Y_test, y_test_pred.view(-1)))
         print("mse:",loss(y_test_pred.view(-1), Y_test))
+        print("r2:", r2_score(Y_test, y_test_pred.view(-1)))
+
 
     # 可视化结果
     plt.figure(figsize=(10, 5))
