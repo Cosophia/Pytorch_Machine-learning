@@ -1,5 +1,3 @@
-import time
-
 from matplotlib import pyplot as plt
 from sklearn.datasets import load_diabetes
 from sklearn.metrics import r2_score
@@ -8,7 +6,7 @@ from sklearn.preprocessing import StandardScaler
 import torch.nn as nn
 import torch.nn.functional as Fun
 import torch
-import os
+
 
 
 # 线性模型的定义
