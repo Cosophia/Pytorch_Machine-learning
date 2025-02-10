@@ -1,3 +1,5 @@
+import time
+
 from matplotlib import pyplot as plt
 from sklearn.datasets import load_diabetes
 from sklearn.metrics import r2_score
@@ -6,6 +8,7 @@ from sklearn.preprocessing import StandardScaler
 import torch.nn as nn
 import torch.nn.functional as Fun
 import torch
+import os
 
 
 # 线性模型的定义
@@ -22,7 +25,7 @@ def loss(y_prediction, y_train):
 
 # 优化器
 def optimizer(Model):
-    return torch.optim.Adam(Model.parameters(), lr=0.01)
+    return torch.optim.RAdam(Model.parameters(), lr=0.01)
 
 
 def fit(Model, X_data, Y_data, epoch):
@@ -59,7 +62,10 @@ if __name__ == '__main__':
         y_test_pred = model(X_test)
         print("mse:",loss(y_test_pred.view(-1), Y_test))
         print("r2:", r2_score(Y_test, y_test_pred.view(-1)))
-
+    print("What we can know here is that,Linear Regression Model can not fit or explain the Diabetes Problem,")
+    print("The occurrence and progression of diabetes mellitus is affected by a combination of factors")
+    print("and there may be complex nonlinear relationships between these factors, ")
+    print("and linear models assume that the relationship between features and goals is linear, and this complex relationship cannot be effectively captured")
 
     # 可视化结果
     plt.figure(figsize=(10, 5))
@@ -77,3 +83,5 @@ if __name__ == '__main__':
         plt.title(f'Feature:{feature_names[i]}')
         plt.legend()
         plt.show()
+
+
