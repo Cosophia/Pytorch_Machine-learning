@@ -14,15 +14,15 @@ def loss(y_prediction, y_train):
 
 # 优化器
 def optimizer(Model):
-    return torch.optim.RAdam(Model.parameters(), lr=0.01)
+    return torch.optim.RAdam(Model.parameters(), lr=0.01,betas=(0.9, 0.999), eps=1e-8)
 
 
 def fit(Model, X_data, Y_data, epoch):
     for epoch in range(epoch+1):
-        y_pre = Model(X_data)
-        optimizer(Model).zero_grad()  # 梯度清零
-        loss(y_pre.view(-1), Y_data).backward()  # 反向传播
-        optimizer(Model).step()  # 梯度更新
+        optimizer(model).zero_grad() # 梯度清零
+        y_pre=Model(X_data) # 前向传播
+        loss(y_pre.view(-1),Y_data).backward() #反向传播
+        optimizer(Model).step() # 梯度更新
         print("epoch:", epoch, "loss:", loss(y_pre.view(-1), Y_data).item())
 
 # 模型建立
