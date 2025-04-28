@@ -68,7 +68,7 @@ if __name__ == '__main__':
     model = Logistic_Regression(X_train.shape[1])
 
     # 模型训练
-    fit(model, X_train, Y_train, 10000)
+    fit(model, X_train, Y_train, 20000)
 
     # 模型评估
     with torch.no_grad():

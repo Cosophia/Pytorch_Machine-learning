@@ -7,13 +7,13 @@ import torch
 
 
 # KNN算法与Pytorch实现
-def knn_pytorch(X_train, Y_train, X_test, k):
+def knn_pytorch(x_train, y_train, x_test, k):
     # 计算距离
-    distance=torch.cdist(X_test,X_train)
+    distance=torch.cdist(x_test,x_train)
     # 取前k个最接近的索引
     _,index=torch.topk(distance,k,largest=False, dim=1)
     # 根据索引取标签
-    close_labels=Y_train[index]
+    close_labels=y_train[index]
     # 统计标签
     prediction=torch.mode(close_labels,dim=1)[0]
     return prediction

@@ -8,18 +8,20 @@ import torch.nn.functional as Fun
 import torch
 
 
-
 # 线性模型的定义
 class Linear_Regression(nn.Module):
     def __init__(self, input_dim, output_dim):
         super(Linear_Regression, self).__init__()
         self.fc1 = nn.Linear(input_dim, output_dim, bias=True)
+
     def forward(self, x):
         return self.fc1(x)
+
 
 # 损失函数
 def loss(y_prediction, y_train):
     return Fun.mse_loss(y_prediction.view(-1), y_train)
+
 
 # 优化器
 def optimizer(Model):
@@ -27,7 +29,7 @@ def optimizer(Model):
 
 
 def fit(Model, X_data, Y_data, epoch):
-    for epoch in range(epoch+1):
+    for epoch in range(epoch + 1):
         Model.train()
         y_pre = Model(X_data)
         optimizer(Model).zero_grad()  # 梯度清零
@@ -58,7 +60,7 @@ if __name__ == '__main__':
     # 评估模型
     with torch.no_grad():
         y_test_pred = model(X_test)
-        print("mse:",loss(y_test_pred.view(-1), Y_test))
+        print("mse:", loss(y_test_pred.view(-1), Y_test))
         print("r2:", r2_score(Y_test, y_test_pred.view(-1)))
     print("What we can know here is that,Linear Regression Model can not fit or explain the Diabetes Problem,")
     print("The occurrence and progression of diabetes mellitus is affected by a combination of factors")
@@ -81,5 +83,3 @@ if __name__ == '__main__':
         plt.title(f'Feature:{feature_names[i]}')
         plt.legend()
         plt.show()
-
-
